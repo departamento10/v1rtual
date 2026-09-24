@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Pauta — Atualidades e Notícias</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600&family=IBM+Plex+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --ink:#10151B;
+    --ink-2:#182029;
+    --paper:#EDE7DB;
+    --brass:#B8925A;
+    --steel:#2B4257;
+    --line:#3A4550;
+    --paper-dim:#c9c2b2;
+  }
+  *{box-sizing:border-box;margin:0;padding:0;}
+  html{scroll-behavior:smooth;}
+  body{background:var(--ink);color:var(--paper);font-family:'IBM Plex Sans',sans-serif;font-size:16px;line-height:1.6;-webkit-font-smoothing:antialiased;}
+  h1,h2,h3{font-family:'Fraunces',serif;font-weight:500;letter-spacing:-0.01em;}
+  a{color:inherit;}
+  .wrap{max-width:1160px;margin:0 auto;padding:0 32px;}
+
+  header{position:sticky;top:0;z-index:10;background:rgba(16,21,27,0.94);backdrop-filter:blur(6px);border-bottom:1px solid var(--line);}
+  .topbar{display:flex;align-items:center;justify-content:space-between;height:44px;font-size:0.8rem;color:var(--paper-dim);border-bottom:1px solid var(--line);}
+  .topbar .wrap{display:flex;align-items:center;justify-content:space-between;height:44px;}
+  header nav.main{display:flex;align-items:center;justify-content:space-between;height:72px;}
+  .brand{display:flex;align-items:center;gap:10px;font-family:'Fraunces',serif;font-size:1.4rem;}
+  .brand svg{width:22px;height:22px;}
+  .cats{display:flex;gap:30px;font-size:0.9rem;}
+  .cats a{opacity:0.8;text-decoration:none;transition:opacity .2s;}
+  .cats a:hover{opacity:1;color:var(--brass);}
+  .btn{display:inline-flex;align-items:center;gap:8px;padding:11px 20px;background:var(--brass);color:var(--ink);font-weight:600;font-size:0.88rem;text-decoration:none;border-radius:2px;transition:background .2s;}
+  .btn:hover{background:#c9a06a;}
+
+  /* FEATURED */
+  .featured{padding:56px 0 64px;border-bottom:1px solid var(--line);}
+  .featured .wrap{display:grid;grid-template-columns:1.3fr 0.9fr;gap:48px;align-items:start;}
+  .tag{display:inline-block;font-size:0.78rem;color:var(--brass);border:1px solid var(--brass);padding:4px 10px;border-radius:2px;margin-bottom:18px;}
+  .featured h1{font-size:clamp(2rem,3.6vw,2.9rem);line-height:1.12;margin-bottom:18px;}
+  .featured p.lede{color:var(--paper-dim);max-width:56ch;margin-bottom:16px;}
+  .byline{font-size:0.82rem;color:#6b7480;}
+  .side-list{display:flex;flex-direction:column;}
+  .side-item{padding:18px 0;border-top:1px solid var(--line);}
+  .side-item:first-child{border-top:none;}
+  .side-item .tag-sm{font-size:0.72rem;color:var(--brass);margin-bottom:6px;display:block;}
+  .side-item h3{font-size:1.02rem;font-weight:500;line-height:1.35;}
+
+  section{padding:64px 0;border-top:1px solid var(--line);}
+  .section-head{display:flex;align-items:baseline;justify-content:space-between;margin-bottom:40px;}
+  .kicker{font-size:0.85rem;color:var(--brass);display:flex;align-items:center;gap:10px;}
+  .kicker::before{content:"";width:28px;height:1px;background:var(--brass);}
+  .section-head h2{font-size:clamp(1.5rem,2.4vw,2rem);}
+  .see-all{font-size:0.85rem;color:var(--paper-dim);text-decoration:none;border-bottom:1px solid var(--line);padding-bottom:2px;}
+
+  /* GRID NEWS */
+  .news-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:0;border-top:1px solid var(--line);border-left:1px solid var(--line);}
+  .card{padding:30px;border-right:1px solid var(--line);border-bottom:1px solid var(--line);}
+  .card .tag-sm{font-size:0.72rem;color:var(--brass);margin-bottom:10px;display:block;}
+  .card h3{font-size:1.1rem;font-weight:500;line-height:1.35;margin-bottom:10px;}
+  .card p{font-size:0.9rem;color:var(--paper-dim);margin-bottom:14px;}
+  .card .byline{font-size:0.78rem;}
+
+  /* TICKER */
+  .ticker-wrap{background:var(--steel);border-top:1px solid var(--line);border-bottom:1px solid var(--line);overflow:hidden;white-space:nowrap;padding:14px 0;}
+  .ticker{display:inline-block;padding-left:100%;animation:scroll 32s linear infinite;font-size:0.9rem;}
+  .ticker span{margin-right:48px;color:var(--paper);}
+  .ticker span::before{content:"● ";color:var(--brass);}
+  @keyframes scroll{from{transform:translateX(0);}to{transform:translateX(-100%);}}
+  @media (prefers-reduced-motion:reduce){.ticker{animation:none;padding-left:0;}}
+
+  /* NEWSLETTER */
+  .newsletter .wrap{display:grid;grid-template-columns:1fr 1fr;gap:56px;align-items:center;}
+  .newsletter h2{font-size:clamp(1.7rem,2.8vw,2.2rem);max-width:14ch;margin-bottom:14px;}
+  .newsletter p{color:var(--paper-dim);margin-bottom:26px;max-width:46ch;}
+  form.sub{display:flex;gap:12px;}
+  input{flex:1;background:transparent;border:1px solid var(--line);color:var(--paper);padding:13px 16px;font-family:'IBM Plex Sans',sans-serif;font-size:0.95rem;border-radius:2px;}
+  input:focus{outline:2px solid var(--brass);outline-offset:1px;border-color:var(--brass);}
+  ::placeholder{color:#6b7480;}
+
+  footer{border-top:1px solid var(--line);padding:36px 0;}
+  footer .wrap{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px;font-size:0.85rem;color:var(--paper-dim);}
+
+  @media (max-width:860px){
+    .featured .wrap{grid-template-columns:1fr;}
+    .news-grid{grid-template-columns:1fr;}
+    .card{border-right:none;}
+    .cats{display:none;}
+    .newsletter .wrap{grid-template-columns:1fr;}
+    form.sub{flex-direction:column;}
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="topbar">
+    <div class="wrap">
+      <span id="data-hoje"></span>
+      <span>Edição digital · atualizado ao longo do dia</span>
+    </div>
+  </div>
+  <nav class="main wrap">
+    <div class="brand">
+      <svg viewBox="0 0 24 24" fill="none" stroke="var(--brass)" stroke-width="1.3"><rect x="3" y="4" width="18" height="16" rx="1"/><line x1="3" y1="9" x2="21" y2="9"/><line x1="8" y1="9" x2="8" y2="20"/></svg>
+      Pauta
+    </div>
+    <div class="cats">
+      <a href="#economia">Economia</a>
+      <a href="#politica">Política</a>
+      <a href="#tecnologia">Tecnologia</a>
+      <a href="#mundo">Mundo</a>
+    </div>
+    <a href="#newsletter" class="btn">Assinar boletim</a>
+  </nav>
+</header>
+
+<section class="featured">
+  <div class="wrap">
+    <div>
+      <span class="tag">Destaque</span>
+      <h1>Título da matéria principal do dia</h1>
+      <p class="lede">Resumo de abertura explicando o contexto da notícia em destaque, com os fatos mais relevantes logo nas primeiras linhas.</p>
+      <p class="byline">Por Redação Pauta · há 2 horas</p>
+    </div>
+    <div class="side-list">
+      <div class="side-item"><span class="tag-sm">Economia</span><h3>Segunda manchete relevante do dia com uma frase de contexto</h3></div>
+      <div class="side-item"><span class="tag-sm">Política</span><h3>Terceira manchete com desdobramento em curso</h3></div>
+      <div class="side-item"><span class="tag-sm">Tecnologia</span><h3>Quarta manchete sobre lançamento ou tendência recente</h3></div>
+      <div class="side-item"><span class="tag-sm">Mundo</span><h3>Quinta manchete internacional em acompanhamento</h3></div>
+    </div>
+  </div>
+</section>
+
+<div class="ticker-wrap">
+  <div class="ticker">
+    <span>Atualize aqui manchetes rápidas em tempo real</span>
+    <span>Substitua este texto por chamadas de última hora</span>
+    <span>Conecte a um feed RSS ou CMS para automatizar</span>
+    <span>Espaço para nota rápida ou cotação do dia</span>
+  </div>
+</div>
+
+<section id="economia">
+  <div class="wrap">
+    <div class="section-head">
+      <div class="kicker">Economia</div>
+      <h2>Últimas de economia e mercado</h2>
+    </div>
+  </div>
+  <div class="news-grid wrap" style="padding-left:0;padding-right:0;">
+    <div class="card"><span class="tag-sm">Economia</span><h3>Chamada sobre indicador ou dado econômico recente</h3><p>Linha de resumo explicando o impacto da notícia para o leitor.</p><span class="byline">há 3 horas</span></div>
+    <div class="card"><span class="tag-sm">Mercado</span><h3>Chamada sobre movimentação de mercado ou setor</h3><p>Linha de resumo com o principal ponto da matéria.</p><span class="byline">há 5 horas</span></div>
+    <div class="card"><span class="tag-sm">Negócios</span><h3>Chamada sobre empresa, fusão ou resultado trimestral</h3><p>Linha de resumo destacando o dado mais relevante.</p><span class="byline">há 6 horas</span></div>
+  </div>
+</section>
+
+<section id="politica">
+  <div class="wrap">
+    <div class="section-head">
+      <div class="kicker">Política</div>
+      <h2>Acompanhamento político</h2>
+      <a href="#" class="see-all">Ver tudo →</a>
+    </div>
+  </div>
+  <div class="news-grid wrap" style="padding-left:0;padding-right:0;">
+    <div class="card"><span class="tag-sm">Governo</span><h3>Chamada sobre decisão ou anúncio do governo</h3><p>Linha de resumo com o encaminhamento da pauta.</p><span class="byline">há 1 hora</span></div>
+    <div class="card"><span class="tag-sm">Congresso</span><h3>Chamada sobre votação ou tramitação legislativa</h3><p>Linha de resumo com os próximos passos previstos.</p><span class="byline">há 4 horas</span></div>
+    <div class="card"><span class="tag-sm">Eleições</span><h3>Chamada sobre cenário eleitoral ou pesquisa</h3><p>Linha de resumo com a metodologia e a fonte.</p><span class="byline">há 7 horas</span></div>
+  </div>
+</section>
+
+<section id="tecnologia">
+  <div class="wrap">
+    <div class="section-head">
+      <div class="kicker">Tecnologia</div>
+      <h2>Tecnologia e inovação</h2>
+      <a href="#" class="see-all">Ver tudo →</a>
+    </div>
+  </div>
+  <div class="news-grid wrap" style="padding-left:0;padding-right:0;">
+    <div class="card"><span class="tag-sm">Tecnologia</span><h3>Chamada sobre lançamento de produto ou plataforma</h3><p>Linha de resumo com o principal diferencial.</p><span class="byline">há 2 horas</span></div>
+    <div class="card"><span class="tag-sm">Ciência</span><h3>Chamada sobre pesquisa ou descoberta recente</h3><p>Linha de resumo citando a fonte do estudo.</p><span class="byline">há 5 horas</span></div>
+    <div class="card"><span class="tag-sm">Mundo</span><h3>Chamada sobre evento internacional em destaque</h3><p>Linha de resumo com o contexto geopolítico.</p><span class="byline">há 8 horas</span></div>
+  </div>
+</section>
+
+<section class="newsletter" id="newsletter">
+  <div class="wrap">
+    <div>
+      <h2>Receba o resumo do dia por e-mail</h2>
+      <p>As principais manchetes selecionadas pela redação, direto na sua caixa de entrada todas as manhãs.</p>
+      <form class="sub" onsubmit="event.preventDefault(); this.querySelector('button').textContent='Inscrito';">
+        <input type="email" placeholder="Seu e-mail" required>
+        <button type="submit" class="btn" style="border:none;cursor:pointer;">Assinar</button>
+      </form>
+    </div>
+    <div></div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <span>© 2026 Pauta — Atualidades</span>
+    <span>Conteúdo ilustrativo — conecte a um feed real de notícias para publicação</span>
+  </div>
+</footer>
+
+<script>
+  document.getElementById('data-hoje').textContent = new Date().toLocaleDateString('pt-BR', { weekday: 'long', day: 'numeric', month: 'long', year: 'numeric' });
+</script>
+
+</body>
+</html>
